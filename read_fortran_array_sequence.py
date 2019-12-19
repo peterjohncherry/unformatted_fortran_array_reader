@@ -24,8 +24,9 @@ def read_array_sequence(basename, save_as_numpy_file = True, save_as_text_file=T
     seedname_list = get_seedname_list(basename)
 
     for seedname in seedname_list:
-        print("reading" + seedname)
+        print("reading" + seedname, end = '')
         input_array = mr.read_fortran_array(seedname)
+        print ("shape = ", input_array.shape ) 
 
         if save_as_numpy_file:
             np.save(seedname, input_array)
@@ -73,7 +74,7 @@ parser.add_argument('--find_nonzero_elems',
                    action='store',
                    type=bool,
                    dest='find_nonzero_elems',
-                   default=True,
+                   default=False,
                    help="find nonzero elements and output values and indexes into text file")
 
 parser.add_argument('--threshold',
@@ -90,6 +91,6 @@ basename = str(args.target_directory)+str(args.basename)
 print("basename = ", basename)
 save_as_npy = bool(args.save_as_npy)
 save_as_text = bool(args.save_as_text)
-find_nonzero_elems = bool(args.save_as_text)
+find_nonzero_elems = bool(args.find_nonzero_elems)
 threshold = np.float64(args.threshold)
 read_array_sequence(basename, save_as_npy, save_as_text, find_nonzero_elems, threshold)

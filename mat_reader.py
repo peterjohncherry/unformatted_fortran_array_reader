@@ -12,7 +12,9 @@ def read_binary_fortran_file(name, datatype, dim0, dim1=1 ):
         if (datatype == "real"):
             input_array = fmat.read_reals(dtype=np.float64)
         if (datatype == "int"):
-            input_array = fmat.read_reals(dtype=np.int32)
+            input_array = fmat.read_ints(dtype=np.int32)
+    
+        print( name+"shape = " , input_array.shape)
         fmat.close()
 
     else :
@@ -24,7 +26,7 @@ def read_binary_fortran_file(name, datatype, dim0, dim1=1 ):
 
       elif (datatype == "int"):
           fmat = FortranFile(name, 'r')
-          input_array = fmat.read_ints(dtype=np.int16)
+          input_array = fmat.read_ints(dtype=np.int32)
           input_array = input_array.reshape((dim0,dim1)).transpose()
           fmat.close()
 
@@ -77,14 +79,16 @@ def read_fortran_array(seedname):
 
 def find_nonzero_elems(seedname, input_array, threshold = 1e-10):
     non_zero_ids = np.argwhere(np.abs(input_array) > threshold )
-    non_zero_elems = input_array[non_zero_ids]
+
+    non_zero_elems = []
+    for idx in non_zero_ids : 
+        non_zero_elems.append(input_array[idx])
 
 #    np.savetxt(seedname+"_nonzero_ids.txt", non_zero_ids, fmt ='%.4i')
 #    np.savetxt(seedname+"_nonzero_elems.txt", non_zero_elems)
- 
     outfile = open (seedname+"_nonzero.txt","w+" )
-    for idx in non_zero_ids :
-        outfile.write(str(idx)+" =  " + str(input_array[idx]) + "\n" )
+    for ii in range(len(non_zero_ids)):
+        outfile.write(str(non_zero_ids[ii]) + " = " + str(non_zero_elems[ii]) +"\n" )
 
     outfile.close()
         
