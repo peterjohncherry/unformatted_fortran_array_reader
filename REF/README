@@ -1,0 +1,7 @@
+Run this test by typing this at the command prompt. Note that you need to have numpy installed
+
+python3 ../read_fortran_array_sequence.py --basename=lapack_eigvecs
+
+There are more options, which you can view by typing 
+
+python3 ../read_fortran_array_sequence.py --help

@@ -54,7 +54,7 @@ parser.add_argument('--target_directory',
                    type=str,
                    dest='target_directory',
                    default=os.getcwd() + '/',
-                   help="the relevant files can be found at {working_directory}+/+{basename}+*")
+                   help="the relevant files can be found at {target_directory}+/+{basename}+*")
 
 parser.add_argument('--save_as_npy',
                    action='store',
